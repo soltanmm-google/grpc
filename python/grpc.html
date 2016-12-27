@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>grpc package &mdash; grpcio 1.0.4 documentation</title>
+  <title>grpc package &mdash; grpcio 1.1.0.dev0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="grpcio 1.0.4 documentation" href="index.html"/>
+    <link rel="top" title="grpcio 1.1.0.dev0 documentation" href="index.html"/>
         <link rel="next" title="grpc.beta package" href="grpc.beta.html"/>
         <link rel="prev" title="Welcome to grpcio’s documentation!" href="index.html"/> 
 
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.0.4
+                1.1.0.dev0
               </div>
             
           
@@ -1345,6 +1345,32 @@ non-None if request_streaming and response_streaming are both True.</p>
 </dd></dl>
 
 <dl class="class">
+<dt id="grpc.ServiceRpcHandler">
+<em class="property">class </em><code class="descclassname">grpc.</code><code class="descname">ServiceRpcHandler</code><a class="reference internal" href="_modules/grpc.html#ServiceRpcHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#grpc.ServiceRpcHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#grpc.GenericRpcHandler" title="grpc.GenericRpcHandler"><code class="xref py py-class docutils literal"><span class="pre">grpc.GenericRpcHandler</span></code></a></p>
+<p>An implementation of RPC methods belonging to a service.</p>
+<p>A service handles RPC methods with structured names of the form
+&#8216;/Service.Name/Service.MethodX&#8217;, where &#8216;Service.Name&#8217; is the value
+returned by service_name(), and &#8216;Service.MethodX&#8217; is the service method
+name.  A service can have multiple service methods names, but only a single
+service name.</p>
+<dl class="method">
+<dt id="grpc.ServiceRpcHandler.service_name">
+<code class="descname">service_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/grpc.html#ServiceRpcHandler.service_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#grpc.ServiceRpcHandler.service_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns this services name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The service name.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="grpc.Server">
 <em class="property">class </em><code class="descclassname">grpc.</code><code class="descname">Server</code><a class="reference internal" href="_modules/grpc.html#Server"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#grpc.Server" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
@@ -1804,7 +1830,7 @@ the created channel.</li>
 
 <dl class="function">
 <dt id="grpc.server">
-<code class="descclassname">grpc.</code><code class="descname">server</code><span class="sig-paren">(</span><em>thread_pool</em>, <em>handlers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grpc.html#server"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#grpc.server" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">grpc.</code><code class="descname">server</code><span class="sig-paren">(</span><em>thread_pool</em>, <em>handlers=None</em>, <em>options=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/grpc.html#server"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#grpc.server" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a Server with which RPCs can be serviced.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1818,6 +1844,8 @@ RPCs after the returned Server is started. These handlers need not be the
 only handlers the server will use to service RPCs; other handlers may
 later be added by calling add_generic_rpc_handlers any time before the
 returned Server is started.</li>
+<li><strong>options</strong> &#8211; A sequence of string-value pairs according to which to configure
+the created server.</li>
 </ul>
 </td>
 </tr>
@@ -1865,7 +1893,7 @@ the key must end with &#8216;-bin&#8217;, i.e.
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Author.
+        &copy; Copyright 2016, gRPC Python Authors.
 
     </p>
   </div>
@@ -1887,7 +1915,7 @@ the key must end with &#8216;-bin&#8217;, i.e.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0.4',
+            VERSION:'1.1.0.dev0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

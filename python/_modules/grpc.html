@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>grpc &mdash; grpcio 1.0.4 documentation</title>
+  <title>grpc &mdash; grpcio 1.1.0.dev0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="grpcio 1.0.4 documentation" href="../index.html"/>
+    <link rel="top" title="grpcio 1.1.0.dev0 documentation" href="../index.html"/>
         <link rel="up" title="Module code" href="index.html"/> 
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                1.0.4
+                1.1.0.dev0
               </div>
             
           
@@ -989,6 +989,26 @@
     <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div></div>
 
 
+<div class="viewcode-block" id="ServiceRpcHandler"><a class="viewcode-back" href="../grpc.html#grpc.ServiceRpcHandler">[docs]</a><span class="k">class</span> <span class="nc">ServiceRpcHandler</span><span class="p">(</span><span class="n">six</span><span class="o">.</span><span class="n">with_metaclass</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">,</span> <span class="n">GenericRpcHandler</span><span class="p">)):</span>
+  <span class="sd">&quot;&quot;&quot;An implementation of RPC methods belonging to a service.</span>
+
+<span class="sd">  A service handles RPC methods with structured names of the form</span>
+<span class="sd">  &#39;/Service.Name/Service.MethodX&#39;, where &#39;Service.Name&#39; is the value</span>
+<span class="sd">  returned by service_name(), and &#39;Service.MethodX&#39; is the service method</span>
+<span class="sd">  name.  A service can have multiple service methods names, but only a single</span>
+<span class="sd">  service name.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+<div class="viewcode-block" id="ServiceRpcHandler.service_name"><a class="viewcode-back" href="../grpc.html#grpc.ServiceRpcHandler.service_name">[docs]</a>  <span class="k">def</span> <span class="nf">service_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns this services name.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      The service name.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div></div>
+
+
 <span class="c1">#############################  Server Interface  ###############################</span>
 
 
@@ -1351,7 +1371,7 @@
 <span class="sd">    A Channel to the target through which RPCs may be conducted.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="kn">from</span> <span class="nn">grpc</span> <span class="k">import</span> <span class="n">_channel</span>
-  <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">Channel</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+  <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">Channel</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="p">()</span> <span class="k">if</span> <span class="n">options</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">options</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="secure_channel"><a class="viewcode-back" href="../grpc.html#grpc.secure_channel">[docs]</a><span class="k">def</span> <span class="nf">secure_channel</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">credentials</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1367,10 +1387,11 @@
 <span class="sd">    A Channel to the target through which RPCs may be conducted.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="kn">from</span> <span class="nn">grpc</span> <span class="k">import</span> <span class="n">_channel</span>
-  <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">Channel</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">credentials</span><span class="o">.</span><span class="n">_credentials</span><span class="p">)</span></div>
+  <span class="k">return</span> <span class="n">_channel</span><span class="o">.</span><span class="n">Channel</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="p">()</span> <span class="k">if</span> <span class="n">options</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">options</span><span class="p">,</span>
+                          <span class="n">credentials</span><span class="o">.</span><span class="n">_credentials</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="server"><a class="viewcode-back" href="../grpc.html#grpc.server">[docs]</a><span class="k">def</span> <span class="nf">server</span><span class="p">(</span><span class="n">thread_pool</span><span class="p">,</span> <span class="n">handlers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="server"><a class="viewcode-back" href="../grpc.html#grpc.server">[docs]</a><span class="k">def</span> <span class="nf">server</span><span class="p">(</span><span class="n">thread_pool</span><span class="p">,</span> <span class="n">handlers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Creates a Server with which RPCs can be serviced.</span>
 
 <span class="sd">  Args:</span>
@@ -1381,12 +1402,15 @@
 <span class="sd">      only handlers the server will use to service RPCs; other handlers may</span>
 <span class="sd">      later be added by calling add_generic_rpc_handlers any time before the</span>
 <span class="sd">      returned Server is started.</span>
+<span class="sd">    options: A sequence of string-value pairs according to which to configure</span>
+<span class="sd">      the created server.</span>
 
 <span class="sd">  Returns:</span>
 <span class="sd">    A Server with which RPCs can be serviced.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="kn">from</span> <span class="nn">grpc</span> <span class="k">import</span> <span class="n">_server</span>
-  <span class="k">return</span> <span class="n">_server</span><span class="o">.</span><span class="n">Server</span><span class="p">(</span><span class="n">thread_pool</span><span class="p">,</span> <span class="p">()</span> <span class="k">if</span> <span class="n">handlers</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">handlers</span><span class="p">)</span></div>
+  <span class="k">return</span> <span class="n">_server</span><span class="o">.</span><span class="n">Server</span><span class="p">(</span><span class="n">thread_pool</span><span class="p">,</span> <span class="p">()</span> <span class="k">if</span> <span class="n">handlers</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">handlers</span><span class="p">,</span>
+                        <span class="p">()</span> <span class="k">if</span> <span class="n">options</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">options</span><span class="p">)</span></div>
 
 
 <span class="c1">###################################  __all__  #################################</span>
@@ -1416,6 +1440,7 @@
     <span class="s1">&#39;RpcMethodHandler&#39;</span><span class="p">,</span>
     <span class="s1">&#39;HandlerCallDetails&#39;</span><span class="p">,</span>
     <span class="s1">&#39;GenericRpcHandler&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ServiceRpcHandler&#39;</span><span class="p">,</span>
     <span class="s1">&#39;Server&#39;</span><span class="p">,</span>
     <span class="s1">&#39;unary_unary_rpc_method_handler&#39;</span><span class="p">,</span>
     <span class="s1">&#39;unary_stream_rpc_method_handler&#39;</span><span class="p">,</span>
@@ -1465,7 +1490,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Author.
+        &copy; Copyright 2016, gRPC Python Authors.
 
     </p>
   </div>
@@ -1487,7 +1512,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.0.4',
+            VERSION:'1.1.0.dev0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
